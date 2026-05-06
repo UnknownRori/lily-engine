@@ -8,7 +8,6 @@
 
 static bool lily_should_exit();
 static void lily_update();
-static void lily_draw();
 
 rori_status_t lily_engine_init_impl(lily_engine_param params)
 {
@@ -26,12 +25,11 @@ rori_status_t lily_engine_init_impl(lily_engine_param params)
 rori_status_t lily_engine_run()
 {
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateGame, 0, 1);
+    emscripten_set_main_loop(lily_update, 0, 1);
 #else
     while (!WindowShouldClose()) {
         if (lily_should_exit()) break;
         lily_update();
-        lily_draw();
     }
 #endif
 
@@ -47,12 +45,7 @@ static bool lily_should_exit()
 
 static void lily_update()
 {
-
-}
-
-static void lily_draw()
-{
     BeginDrawing(); {
-        ClearBackground(BLACK);
+        ClearBackground(RED);
     } EndDrawing();
 }
