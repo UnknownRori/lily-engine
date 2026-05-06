@@ -16,10 +16,12 @@ else
     lily_src,
     dependencies: [raylib_dep],
     include_directories: [lily_inc, lily_priv_inc],
+    install: true,
+    install_dir: dist_path,
   )
 endif
 
 lily_dep = declare_dependency(
-  dependencies: [raylib_dep],
+  link_with: [lily_lib],
   include_directories: [lily_inc, raylib_inc],
 )

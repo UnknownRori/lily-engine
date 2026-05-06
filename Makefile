@@ -7,10 +7,11 @@ clean:
 	rm -rf dist
 
 build:
+	meson compile -C builddir
 	meson install -C builddir
 
 desktop:
-	meson setup builddir --reconfigure --native-file ./native.ini --buildtype=$(BUILD_TYPE) --prefix=$(pwd)/dist
+	meson setup builddir --wipe --native-file ./native.ini --buildtype=$(BUILD_TYPE) --prefix=$(pwd)/dist
 web:
-	meson setup builddir --reconfigure --cross-file ./web.ini --buildtype=$(BUILD_TYPE) --prefix=$(pwd)/dist
+	meson setup builddir --wipe --cross-file ./web.ini --buildtype=$(BUILD_TYPE) --prefix=$(pwd)/dist
 
