@@ -11,7 +11,7 @@
 #pragma once
 
 #include "lily/types.h"
-#include "lily/scenes.h"
+#include "lily/scene.h"
 
 typedef struct lily_engine {
     u32     width;

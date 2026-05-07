@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "./scenes.h"
+#include "./scene.h"
 #include "./types.h"
 
 typedef struct lily_engine lily_engine;
