@@ -1,6 +1,8 @@
+#include <raylib.h>
 #include "lily/engine.h"
 #include "lily/types.h"
-#include "raylib.h"
+
+#include "./scene_manager.h"
 
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
@@ -18,6 +20,9 @@ rori_status_t lily_engine_init_impl(lily_engine_param params)
     InitAudioDevice();
     InitWindow(params.width, params.height, params.title);
     SetTargetFPS(params.fps);
+
+    scene_manager_init();
+    scene_manager_change(params.start);
 
     return RORI_SUCCESS;
 }
@@ -45,7 +50,8 @@ static bool lily_should_exit()
 
 static void lily_update()
 {
+    scene_manager_update();
     BeginDrawing(); {
-        ClearBackground(RED);
+        scene_manager_render();
     } EndDrawing();
 }

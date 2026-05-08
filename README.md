@@ -11,7 +11,7 @@ Why I name it lily? idk.
 
 ## Features
 
-- [ ] Scene System
+- [X] Scene System (no transition yet)
 - [X] Centralized Memory Management
 - [X] Packaging Assets (as zip file for now)
 - [ ] Configuration file with .ini

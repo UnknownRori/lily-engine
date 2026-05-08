@@ -23,3 +23,7 @@ typedef struct scene_t {
     scene_update_f update;
     scene_render_f render;
 } scene_t;
+
+void scene_manager_change(scene_t);
+void scene_manager_transition_to(scene_t);
+
