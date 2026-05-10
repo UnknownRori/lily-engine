@@ -1,15 +1,19 @@
 project('lily', 'c')
 
-os = host_machine.system()
-os_is_emscripten = (os == 'emscripten')
-os_is_windows = (os == 'windows')
-os_is_linux = (os == 'linux')
-
 raylib = subproject('raylib', default_options: ['default_library=static'])
 raylib_dep = raylib.get_variable('raylib_dep')
 raylib_inc = raylib.get_variable('raylib_inc')
 
+inih = subproject('inih', default_options: ['default_library=static'])
+inih_dep = inih.get_variable('inih_dep')
+inih_inc = inih.get_variable('inc_inih')
+
 lily_inc = include_directories('./include')
+
+os = host_machine.system()
+os_is_emscripten = (os == 'emscripten')
+os_is_windows = (os == 'windows')
+os_is_linux = (os == 'linux')
 
 bash = find_program('bash')
 name = meson.project_name()
