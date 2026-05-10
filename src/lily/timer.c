@@ -39,7 +39,7 @@ bool timer_is_completed (const timer_t* t)
 bool timer_is_done      (const timer_t* t)
 {
     RORI_ASSERT(t != NULL && "Timer must not null");
-    return t->m_lifetime > 0.;
+    return !(t->m_lifetime > 0.);
 }
 
 f32  timer_progress     (const timer_t* t)

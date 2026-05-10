@@ -17,7 +17,7 @@ Why I name it lily? idk.
 - [ ] Configuration file with .ini
 - [ ] Dynamic Array
 - [ ] Timer
-- [ ] Tween System
+- [X] Tween System
 - [ ] Assets Manager
 - [ ] UI Helper
 - [ ] Camera Helper
