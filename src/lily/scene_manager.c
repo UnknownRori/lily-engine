@@ -3,6 +3,7 @@
 
 #include "lily/types.h"
 #include "lily/assert.h"
+#include "lily/scene.h"
 #include "./scene_manager.h"
 
 static scene_t current;

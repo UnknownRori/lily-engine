@@ -10,6 +10,7 @@ if os_is_emscripten
   link_args += '--preload-file'
   link_args += resource_src
 endif
+link_args += '-lm'
 
 executable(
   name,
