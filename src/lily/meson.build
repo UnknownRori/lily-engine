@@ -1,5 +1,6 @@
 lily_priv_inc = include_directories('.')
 lily_src = files(
+  'anim/easing.c',
   'engine.c',
   'scene_manager.c',
   'timer.c',
