@@ -16,7 +16,7 @@ Why I name it lily? idk.
 - [X] Packaging Assets (as zip file for now)
 - [ ] Configuration file with .ini
 - [ ] Dynamic Array
-- [ ] Timer
+- [X] Timer
 - [X] Tween System
 - [ ] Assets Manager
 - [ ] UI Helper
