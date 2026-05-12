@@ -16,5 +16,6 @@ void engine_ini_parse(
     char**  title,
     u32*    width,
     u32*    height,
-    u8*     fps
+    u8*     fps,
+    bool*   vsync
 );

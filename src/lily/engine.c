@@ -16,20 +16,25 @@ static void lily_update();
 rori_status_t lily_engine_init_impl(lily_engine_param params)
 {
     char* title = params.title;
-    u32 width   = params.width;
-    u32 height  = params.height;
-    u8  fps     = params.fps;
+    u32  width  = params.width;
+    u32  height = params.height;
+    u8   fps    = params.fps;
+    bool vsync  = params.vsync;
     if (title == NULL) {
         title = "Lily Engine by UnknownRori";
     }
 
     if (params.read_engine_ini) {
-        engine_ini_parse(&title, &width, &height, &fps);
+        engine_ini_parse(&title, &width, &height, &fps, &vsync);
     }
 
     InitAudioDevice();
     InitWindow(width, height, title);
     SetTargetFPS(fps);
+
+    if (vsync) {
+        SetWindowState(FLAG_VSYNC_HINT);
+    }
 
     scene_manager_init();
     scene_manager_change(params.start);

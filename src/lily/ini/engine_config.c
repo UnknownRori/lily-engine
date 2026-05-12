@@ -11,6 +11,7 @@ typedef struct {
     u32*    width;
     u32*    height;
     u8*     fps;
+    bool*   vsync;
 } ini_config;
 
 static int handler(
@@ -31,6 +32,8 @@ static int handler(
         *config->width = (u32)atoi(value);
     } else if (MATCH("Display", "Height")) {
         *config->height = (u32)atoi(value);
+    } else if (MATCH("Display", "VSYNC")) {
+        *config->vsync = (u32)atoi(value) > 0 ? true : false;
     } else if (MATCH("Display", "Height")) {
         u32 fps = (u32)atoi(value);
         if (fps > 255) {
@@ -46,13 +49,15 @@ void engine_ini_parse(
     char**  title,
     u32*    width,
     u32*    height,
-    u8*     fps
+    u8*     fps,
+    bool*   vsync
 ) {
     ini_config config = (ini_config) {
         .title  = title,
         .height = height,
         .width  = width,
         .fps    = fps,
+        .vsync  = vsync,
     };
     char* data = LoadFileText("lily.ini");
     if (data == NULL) {
