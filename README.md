@@ -15,7 +15,7 @@ Why I name it lily? idk.
 - [X] Centralized Memory Management
 - [X] Packaging Assets (as zip file for now)
 - [ ] Configuration file with .ini
-- [ ] Dynamic Array
+- [X] Dynamic Array
 - [X] Timer
 - [X] Tween System
 - [ ] Assets Manager
