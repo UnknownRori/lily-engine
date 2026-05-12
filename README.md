@@ -14,7 +14,7 @@ Why I name it lily? idk.
 - [X] Scene System (no transition yet)
 - [X] Centralized Memory Management
 - [X] Packaging Assets (as zip file for now)
-- [ ] Configuration file with .ini
+- [X] Configuration file with .ini
 - [ ] Dynamic Array
 - [X] Timer
 - [X] Tween System
