@@ -19,8 +19,10 @@ typedef struct lily_engine_param {
     u32     width;
     u32     height;
     u8      fps;
+    bool    vsync;
 
     scene_t start;
+    bool    read_engine_ini;
 } lily_engine_param;
 
 #define lily_engine_init(...) lily_engine_init_impl((lily_engine_param) {__VA_ARGS__})

@@ -1,7 +1,9 @@
 #include <raylib.h>
 #include "lily/engine.h"
+#include "lily/memory.h"
 #include "lily/types.h"
 
+#include "./ini/engine_config.h"
 #include "./scene_manager.h"
 
 #if defined(PLATFORM_WEB)
@@ -13,16 +15,33 @@ static void lily_update();
 
 rori_status_t lily_engine_init_impl(lily_engine_param params)
 {
-    if (params.title == NULL) {
-        params.title = "Lily";
+    char* title = params.title;
+    u32  width  = params.width;
+    u32  height = params.height;
+    u8   fps    = params.fps;
+    bool vsync  = params.vsync;
+    if (title == NULL) {
+        title = "Lily Engine by UnknownRori";
+    }
+
+    if (params.read_engine_ini) {
+        engine_ini_parse(&title, &width, &height, &fps, &vsync);
     }
 
     InitAudioDevice();
-    InitWindow(params.width, params.height, params.title);
-    SetTargetFPS(params.fps);
+    InitWindow(width, height, title);
+    SetTargetFPS(fps);
+
+    if (vsync) {
+        SetWindowState(FLAG_VSYNC_HINT);
+    }
 
     scene_manager_init();
     scene_manager_change(params.start);
+
+    if (params.read_engine_ini) {
+        RORI_FREE(title);
+    }
 
     return RORI_SUCCESS;
 }
