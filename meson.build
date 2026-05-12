@@ -10,6 +10,7 @@ raylib_dep = raylib.get_variable('raylib_dep')
 raylib_inc = raylib.get_variable('raylib_inc')
 
 lily_inc = include_directories('./include')
+rstb_inc = include_directories('./external/rstb')
 
 bash = find_program('bash')
 name = meson.project_name()
