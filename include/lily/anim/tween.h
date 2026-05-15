@@ -16,7 +16,7 @@
 
 typedef f32(*ease_fn)(f32);
 typedef struct tween_base_t {
-    timer_t m_timer;
+    lily_timer_t m_timer;
     ease_fn easing;
 } tween_base_t;
 
