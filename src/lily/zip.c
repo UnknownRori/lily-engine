@@ -55,7 +55,7 @@ char*           lily_load_zip_text(const char* file)
     size_t size = 0;
     u8* data = lily_load_zip_file(file, &size);
     if (!data) {
-        TraceLog(LOG_WARNING, "LoadTextFromZip: Failed to load image '%s'", file);
+        TraceLog(LOG_WARNING, "LoadTextFromZip: Failed to load text '%s'", file);
         return RORI_ALLOCATION_FAIL;
     }
 

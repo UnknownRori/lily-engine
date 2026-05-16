@@ -21,7 +21,4 @@ executable(
   c_args: c_args,
   install: true,
   install_dir: dist_path,
-  # dependencies: [lily_dep, raylib_dep],
-  # link_with: [lily_lib],
-  # include_directories: [game_inc, lily_inc],
 )
