@@ -14,7 +14,7 @@ if os_is_emscripten or os_is_linux
   lily_lib = static_library(
     'lily',
     lily_src,
-    dependencies: [raylib_dep, inih_dep],
+    dependencies: [raylib_dep, inih_dep, miniz_dep],
     include_directories: [lily_inc, rstb_inc, lily_priv_inc],
   )
 else
