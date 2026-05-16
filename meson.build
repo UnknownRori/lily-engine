@@ -9,6 +9,7 @@ inih_dep = inih.get_variable('inih_dep')
 inih_inc = inih.get_variable('inc_inih')
 
 lily_inc = include_directories('./include')
+rstb_inc = include_directories('./external/rstb')
 
 os = host_machine.system()
 os_is_emscripten = (os == 'emscripten')

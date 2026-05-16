@@ -14,10 +14,11 @@ Why I name it lily? idk.
 - [X] Scene System (no transition yet)
 - [X] Centralized Memory Management
 - [X] Packaging Assets (as zip file for now)
+- [X] Dynamic Array
 - [X] Configuration file with .ini
-- [ ] Dynamic Array
 - [X] Timer
 - [X] Tween System
+- [X] 2D Rendering Pipeline
 - [ ] Assets Manager
 - [ ] UI Helper
 - [ ] Camera Helper
