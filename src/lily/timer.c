@@ -1,7 +1,7 @@
 #include "lily/timer.h"
 #include "lily/assert.h"
 
-void timer_init         (timer_t* t, f32 lifetime, bool repeating)
+void timer_init         (lily_timer_t* t, f32 lifetime, bool repeating)
 {
     RORI_ASSERT(t != NULL && "Timer must not null");
     t->m_lifetime  = lifetime;
@@ -12,13 +12,13 @@ void timer_init         (timer_t* t, f32 lifetime, bool repeating)
     t->m_previously_completed = false;
 }
 
-void timer_reset        (timer_t* t)
+void timer_reset        (lily_timer_t* t)
 {
     RORI_ASSERT(t != NULL && "Timer must not null");
     timer_init(t, t->m_lifetime, t->m_repeating);
 }
 
-void timer_update       (timer_t* t, f32 dt)
+void timer_update       (lily_timer_t* t, f32 dt)
 {
     RORI_ASSERT(t != NULL && "Timer must not null");
 
@@ -30,19 +30,19 @@ void timer_update       (timer_t* t, f32 dt)
     if (t->m_remaining <= 0.0) t->m_completed = true;
 }
 
-bool timer_is_completed (const timer_t* t)
+bool timer_is_completed (const lily_timer_t* t)
 {
     RORI_ASSERT(t != NULL && "Timer must not null");
     return t->m_completed;
 }
 
-bool timer_is_done      (const timer_t* t)
+bool timer_is_done      (const lily_timer_t* t)
 {
     RORI_ASSERT(t != NULL && "Timer must not null");
     return !(t->m_lifetime > 0.);
 }
 
-f32  timer_progress     (const timer_t* t)
+f32  timer_progress     (const lily_timer_t* t)
 {
     RORI_ASSERT(t != NULL && "Timer must not null");
     return t->m_remaining / t->m_lifetime;
