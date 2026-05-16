@@ -77,9 +77,14 @@ void render2d_pipeline_flush(render2d_pipeline_t* p)
             } break;
             case DRAW2D_TEXTURE: {
                 render2d_texture_t* t = &cmd->texture;
+                Rectangle src = t->src;
+                if (src.width == 0 || src.height == 0) {
+                    src.width  = t->texture.width;
+                    src.height = t->texture.height;
+                }
                 DrawTexturePro(
                     t->texture, 
-                    t->src, 
+                    src, 
                     t->dst, 
                     t->origin, 
                     t->rot, 
@@ -97,10 +102,11 @@ void render2d_pipeline_flush(render2d_pipeline_t* p)
     }
 }
 
-#define REGISTER_CMD_PUSH_IMPL(NAME, TYPE, VAR) \
+#define REGISTER_CMD_PUSH_IMPL(NAME, CMD_TYPE, TYPE, VAR) \
     void render2d_push_##NAME##_impl(render2d_pipeline_t* p, u16 z, TYPE t)             \
     {                                                                                   \
         render2d_cmd_t cmd = (render2d_cmd_t) {                                         \
+            .type = CMD_TYPE,                                                           \
             .z    = z,                                                                  \
             .VAR  = t,                                                                  \
         };                                                                              \
@@ -108,6 +114,6 @@ void render2d_pipeline_flush(render2d_pipeline_t* p)
         rstb_da_append(p, cmd);                                                         \
     }
 
-REGISTER_CMD_PUSH_IMPL(text     , render2d_text_t   , text);
-REGISTER_CMD_PUSH_IMPL(rect     , render2d_rect_t   , rect);
-REGISTER_CMD_PUSH_IMPL(texture  , render2d_texture_t, texture);
+REGISTER_CMD_PUSH_IMPL(text     , DRAW2D_TEXT   , render2d_text_t   , text);
+REGISTER_CMD_PUSH_IMPL(rect     , DRAW2D_RECT   , render2d_rect_t   , rect);
+REGISTER_CMD_PUSH_IMPL(texture  , DRAW2D_TEXTURE, render2d_texture_t, texture);
