@@ -5,6 +5,7 @@ lily_src = files(
   'anim/tween.c',
   'anim/tween_def.c',
   'ini/engine_config.c',
+  'assets.c',
   'engine.c',
   'scene_manager.c',
   'timer.c',
