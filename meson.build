@@ -6,6 +6,7 @@ raylib_inc = raylib.get_variable('raylib_inc')
 
 miniz = subproject('miniz', default_options: ['default_library=static'])
 miniz_dep = miniz.get_variable('miniz_dep')
+miniz_inc = miniz.get_variable('miniz_includes')
 
 inih = subproject('inih', default_options: ['default_library=static'])
 inih_dep = inih.get_variable('inih_dep')
