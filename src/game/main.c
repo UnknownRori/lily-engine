@@ -64,6 +64,7 @@ static void  Update(f32 dt, void* data)
 static void  Render(f32 dt, void* data)
 {
     Demo* demo = data;
+    DrawFPS(20, 20);
     ClearBackground((Color) {.r = 69, .g = 69, .b = 69, .a = 255});
     render2d_push_rect(
         demo->p, 69, 
