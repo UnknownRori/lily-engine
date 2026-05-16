@@ -41,6 +41,7 @@ zip_target = custom_target(
     '@OUTPUT@',
   ],
   build_by_default: true,
+  build_always_stale: true, # Maybe track the assets?
   install: not os_is_emscripten,
   install_dir: dist_path,
 )
