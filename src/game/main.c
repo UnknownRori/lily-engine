@@ -83,6 +83,7 @@ int main()
         .height = SCR_H,
         .fps    = 60,
         .start  = { .init = Init, .render = Render, .update = Update, .unload = Unload },
+        .read_engine_ini = true,
     );
 
     lily_engine_run();
