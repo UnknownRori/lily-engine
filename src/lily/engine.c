@@ -3,6 +3,7 @@
 #include "lily/memory.h"
 #include "lily/types.h"
 
+#include "./assets.h"
 #include "./ini/engine_config.h"
 #include "./scene_manager.h"
 
@@ -36,6 +37,8 @@ rori_status_t lily_engine_init_impl(lily_engine_param params)
         SetWindowState(FLAG_VSYNC_HINT);
     }
 
+    lily_assets_load();
+
     scene_manager_init();
     scene_manager_change(params.start);
 
@@ -56,6 +59,8 @@ rori_status_t lily_engine_run()
         lily_update();
     }
 #endif
+
+    lily_assets_unload();
 
     return RORI_SUCCESS;
 }

@@ -4,6 +4,10 @@ raylib = subproject('raylib', default_options: ['default_library=static'])
 raylib_dep = raylib.get_variable('raylib_dep')
 raylib_inc = raylib.get_variable('raylib_inc')
 
+miniz = subproject('miniz', default_options: ['default_library=static'])
+miniz_dep = miniz.get_variable('miniz_dep')
+miniz_inc = miniz.get_variable('miniz_includes')
+
 inih = subproject('inih', default_options: ['default_library=static'])
 inih_dep = inih.get_variable('inih_dep')
 inih_inc = inih.get_variable('inc_inih')
@@ -27,6 +31,21 @@ dist_path = root / 'dist'
 resources_files = [
   'resources/lily.ini',
 ]
+zip_target = custom_target(
+  'package_assets',
+  output: 'data.zip',
+  command: [
+    bash,
+    pkg_script,
+    asset_src,
+    '@OUTPUT@',
+  ],
+  build_by_default: true,
+  build_always_stale: true, # Maybe track the assets?
+  install: not os_is_emscripten,
+  install_dir: dist_path,
+)
+
 if os_is_emscripten
   resources_files = []
   resources_files += 'index.html'
@@ -43,20 +62,19 @@ if os_is_emscripten
     + ' '
     + dist_path,
   )
-else
-  custom_target(
-    'package_assets',
-    output: 'data.zip',
+  zip_copy = custom_target(
+    'copy_zip_to_resources',
+    input: zip_target,
+    output: 'data.zip.stamp',
     command: [
-      bash,
-      pkg_script,
-      asset_src,
-      '@OUTPUT@',
+      'sh',
+      '-c', 'cp @INPUT@ ' + (resource_src / 'data.zip') + ' && touch @OUTPUT@',
     ],
     build_by_default: true,
-    install: true,
-    install_dir: dist_path,
   )
+  zip_copy_dep = declare_dependency(sources: zip_copy)
+else
+  resources_files = ['resources/lily.ini']
 endif
 install_data(resources_files, install_dir: dist_path)
 

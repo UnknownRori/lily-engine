@@ -28,6 +28,8 @@ typedef int64_t     i64;
 typedef float       f32;
 typedef double      f64;
 
+typedef size_t      usize;
+
 #define RORI_ALLOCATION_FAIL NULL
 typedef enum rori_status_t {
     RORI_FAIL       = -1,

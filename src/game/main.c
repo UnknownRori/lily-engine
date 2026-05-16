@@ -2,6 +2,7 @@
 #include "lily/anim/easing.h"
 #include "lily/anim/tween.h"
 #include "lily/anim/tween_def.h"
+#include "lily/assets.h"
 #include "lily/engine.h"
 #include "lily/math.h"
 #include "lily/memory.h"
@@ -17,6 +18,7 @@ typedef struct Demo {
     f32 x, y;
     f32 xv, yv;
     f32 radius;
+    Font font;
 
     Color           c;
     tween_f32_t     bounce;
@@ -38,6 +40,7 @@ static void* Init()
     demo->p = render2d_pipeline_init(
         .reserve = 128,
     );
+    demo->font = lily_get_font("rori");
     return demo;
 }
 
@@ -61,12 +64,20 @@ static void  Update(f32 dt, void* data)
 static void  Render(f32 dt, void* data)
 {
     Demo* demo = data;
+    DrawFPS(20, 20);
     ClearBackground((Color) {.r = 69, .g = 69, .b = 69, .a = 255});
     render2d_push_rect(
         demo->p, 69, 
         .tint = demo->c,
         .size = VEC2(demo->radius, demo->radius),
         .pos  = VEC2(demo->x, demo->y)
+    );
+    render2d_push_text(
+        demo->p, 80, 
+        .font = &demo->font,
+        .tint = WHITE,
+        .text = "Lily engine!",
+        .size = 32,
     );
     render2d_pipeline_flush(demo->p);
 }

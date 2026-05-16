@@ -4,3 +4,5 @@ builddir/
 builddir_web/
 
 compile_commands.json
+
+resources/data.zip
