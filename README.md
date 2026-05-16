@@ -19,7 +19,7 @@ Why I name it lily? idk.
 - [X] Timer
 - [X] Tween System
 - [X] 2D Rendering Pipeline
-- [ ] Assets Manager
+- [X] Assets Manager
 - [ ] UI Helper
 - [ ] Camera Helper
 
