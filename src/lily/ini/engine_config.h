@@ -12,7 +12,7 @@
 
 #include "lily/types.h"
 
-void engine_ini_parse(
+bool engine_ini_parse(
     char**  title,
     u32*    width,
     u32*    height,

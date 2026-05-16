@@ -45,7 +45,7 @@ static int handler(
     return 1;
 }
 
-void engine_ini_parse(
+bool engine_ini_parse(
     char**  title,
     u32*    width,
     u32*    height,
@@ -62,9 +62,10 @@ void engine_ini_parse(
     char* data = LoadFileText("lily.ini");
     if (data == NULL) {
         TraceLog(LOG_WARNING, "Failed to load engine configuration file");
-        return;
+        return false;
     }
 
     ini_parse_string(data, handler, &config);
     UnloadFileText(data);
+    return true;
 }

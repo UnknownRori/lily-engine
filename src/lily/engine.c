@@ -21,12 +21,13 @@ rori_status_t lily_engine_init_impl(lily_engine_param params)
     u32  height = params.height;
     u8   fps    = params.fps;
     bool vsync  = params.vsync;
+    bool read_config = false;
     if (title == NULL) {
         title = "Lily Engine by UnknownRori";
     }
 
     if (params.read_engine_ini) {
-        engine_ini_parse(&title, &width, &height, &fps, &vsync);
+        read_config = !engine_ini_parse(&title, &width, &height, &fps, &vsync);
     }
 
     InitAudioDevice();
@@ -42,7 +43,7 @@ rori_status_t lily_engine_init_impl(lily_engine_param params)
     scene_manager_init();
     scene_manager_change(params.start);
 
-    if (params.read_engine_ini) {
+    if (read_config) {
         RORI_FREE(title);
     }
 
