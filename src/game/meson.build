@@ -16,7 +16,7 @@ executable(
   name,
   game_src,
   dependencies: [lily_dep],
-  include_directories: [game_inc, rstb_inc, rstb_inc, lily_inc],
+  include_directories: [game_inc, rstb_inc, lily_inc],
   link_args: link_args,
   c_args: c_args,
   install: true,

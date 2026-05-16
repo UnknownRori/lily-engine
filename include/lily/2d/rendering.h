@@ -39,6 +39,8 @@ typedef struct render2d_text_t {
     Font*       font;
     Vector2     pos;
     f32         size;
+    f32         spacing;
+    f32         rot;
     Color       tint;
 } render2d_text_t;
 
@@ -54,23 +56,25 @@ typedef struct render2d_cmd_t {
 
 typedef struct render2d_pipeline_t render2d_pipeline_t;
 typedef struct render2d_pipeline_args {
+    u32              reserve;
     Shader*          shader; // NULL for no shader usage
     RenderTexture2D* target; // NULL target global
 } render2d_pipeline_args;
 
 #define render2d_pipeline_init(...) \
-    render2d_pipeline_init_impl((render2d_pipeline_init_impl) {__VA_ARGS__})
+    render2d_pipeline_init_impl((render2d_pipeline_args) {__VA_ARGS__})
 render2d_pipeline_t* render2d_pipeline_init_impl(render2d_pipeline_args);
 void render2d_pipeline_flush(render2d_pipeline_t*);
+void render2d_pipeline_free(render2d_pipeline_t*);
 
-#define render2d_push_rect(...) \
-    render2d_push_rect_impl((render2d_rect_t) {__VA_ARGS__})
-void render2d_push_rect_impl(render2d_rect_t);
+#define render2d_push_rect(P, Z, ...) \
+    render2d_push_rect_impl(P, Z, (render2d_rect_t) {__VA_ARGS__})
+void render2d_push_rect_impl(render2d_pipeline_t*, u16, render2d_rect_t);
 
-#define render2d_push_text(...) \
-    render2d_push_text_impl((render2d_text_t) {__VA_ARGS__})
-void render2d_push_text_impl(render2d_text_t);
+#define render2d_push_text(P, Z, ...) \
+    render2d_push_text_impl(P, Z, (render2d_text_t) {__VA_ARGS__})
+void render2d_push_text_impl(render2d_pipeline_t*, u16, render2d_text_t);
 
-#define render2d_push_texture(...) \
-    render2d_push_texture_impl((render2d_texture_t) {__VA_ARGS__})
-void render2d_push_texture_impl(render2d_texture_t);
+#define render2d_push_texture(P, Z, ...) \
+    render2d_push_texture_impl(P, Z, (render2d_texture_t) {__VA_ARGS__})
+void render2d_push_texture_impl(render2d_pipeline_t*, u16, render2d_texture_t);

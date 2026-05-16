@@ -1,5 +1,6 @@
 lily_priv_inc = include_directories('.')
 lily_src = files(
+  '2d/rendering.c',
   'anim/easing.c',
   'anim/tween.c',
   'anim/tween_def.c',

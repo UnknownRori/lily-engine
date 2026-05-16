@@ -1,7 +1,9 @@
+#include "lily/2d/rendering.h"
 #include "lily/anim/easing.h"
 #include "lily/anim/tween.h"
 #include "lily/anim/tween_def.h"
 #include "lily/engine.h"
+#include "lily/math.h"
 #include "lily/memory.h"
 #include "lily/types.h"
 #include <raylib.h>
@@ -19,6 +21,8 @@ typedef struct Demo {
     Color           c;
     tween_f32_t     bounce;
     tween_Color_t   color;
+
+    render2d_pipeline_t* p;
 } Demo;
 
 static void* Init()
@@ -31,17 +35,20 @@ static void* Init()
     demo->yv = SPEED;
     TWEEN_INIT(f32  , &demo->bounce, 2.0, ease_in_sine);
     TWEEN_INIT(Color, &demo->color , 2.0, ease_in_sine);
+    demo->p = render2d_pipeline_init(
+        .reserve = 128,
+    );
     return demo;
 }
 
 static void  Update(f32 dt, void* data)
 {
     Demo* demo = data;
-    if (demo->x - demo->radius < 0 || demo->x > SCR_W - demo->radius) {
+    if ((demo->x) < 0 || demo->x > (SCR_W - demo->radius)) {
         demo->xv *= -1.;
     }
 
-    if (demo->y - demo->radius < 0 || demo->y > SCR_H - demo->radius) {
+    if ((demo->y) < 0 || demo->y > (SCR_H - demo->radius)) {
         demo->yv *= -1.;
     }
 
@@ -54,8 +61,14 @@ static void  Update(f32 dt, void* data)
 static void  Render(f32 dt, void* data)
 {
     Demo* demo = data;
-    ClearBackground(GRAY);
-    DrawCircle(demo->x, demo->y, demo->radius, demo->c);
+    ClearBackground((Color) {.r = 69, .g = 69, .b = 69, .a = 255});
+    render2d_push_rect(
+        demo->p, 69, 
+        .tint = demo->c,
+        .size = VEC2(demo->radius, demo->radius),
+        .pos  = VEC2(demo->x, demo->y)
+    );
+    render2d_pipeline_flush(demo->p);
 }
 
 static void  Unload(void* data)
@@ -66,8 +79,8 @@ static void  Unload(void* data)
 int main()
 {
     lily_engine_init(
-        .width  = 800,
-        .height = 600,
+        .width  = SCR_W,
+        .height = SCR_H,
         .fps    = 60,
         .start  = { .init = Init, .render = Render, .update = Update, .unload = Unload },
     );
