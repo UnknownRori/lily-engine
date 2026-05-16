@@ -14,14 +14,14 @@ if os_is_emscripten or os_is_linux
   lily_lib = static_library(
     'lily',
     lily_src,
-    dependencies: [raylib_dep],
+    dependencies: [raylib_dep, inih_dep],
     include_directories: [lily_inc, rstb_inc, lily_priv_inc],
   )
 else
   lily_lib = library(
     'lily',
     lily_src,
-    dependencies: [raylib_dep],
+    dependencies: [raylib_dep, inih_dep],
     include_directories: [lily_inc, rstb_inc, lily_priv_inc],
     install: true,
     install_dir: dist_path,
