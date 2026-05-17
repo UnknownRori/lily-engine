@@ -57,6 +57,7 @@ typedef struct render2d_cmd_t {
 typedef struct render2d_pipeline_t render2d_pipeline_t;
 typedef struct render2d_pipeline_args {
     u32              reserve;
+    Camera2D*        camera; // NULL for no camera
     Shader*          shader; // NULL for no shader usage
     RenderTexture2D* target; // NULL target global
 } render2d_pipeline_args;
