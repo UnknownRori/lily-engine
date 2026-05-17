@@ -98,7 +98,7 @@ void render2d_pipeline_flush(render2d_pipeline_t* p)
     }
     rstb_da_reset(p);
     if (p->target) {
-        BeginTextureMode(*p->target);
+        EndTextureMode();
     }
 }
 
