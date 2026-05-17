@@ -11,6 +11,7 @@
 #define LILY_MAX_FONTS     4
 #define LILY_MAX_SOUNDS    64
 #define LILY_MAX_MUSIC     16
+#define LILY_MAX_TEXTS     64
 #define LILY_MAX_NAME      64
 
 typedef struct { char name[LILY_MAX_NAME]; Image     asset; } lily_image_slot_t;
@@ -18,6 +19,7 @@ typedef struct { char name[LILY_MAX_NAME]; Texture2D asset; } lily_texture_slot_
 typedef struct { char name[LILY_MAX_NAME]; Font      asset; } lily_font_slot_t;
 typedef struct { char name[LILY_MAX_NAME]; Sound     asset; } lily_sound_slot_t;
 typedef struct { char name[LILY_MAX_NAME]; Music     asset; } lily_music_slot_t;
+typedef struct { char name[LILY_MAX_NAME]; char*     asset; } lily_text_slot_t;
 
 static struct {
     Image img_fallback;
@@ -27,6 +29,7 @@ static struct {
     lily_font_slot_t    fonts[LILY_MAX_FONTS];       int font_count;
     lily_sound_slot_t   sounds[LILY_MAX_SOUNDS];     int sound_count;
     lily_music_slot_t   music[LILY_MAX_MUSIC];       int music_count;
+    lily_text_slot_t    texts[LILY_MAX_TEXTS];       int text_count;
 } s_global_assets = {0};
 
 static int parse_arts_ini(
@@ -70,6 +73,9 @@ void lily_assets_unload()
         UnloadSound(s_global_assets.sounds[i].asset);
     for (int i = 0; i < s_global_assets.music_count;   i++) 
         UnloadMusicStream(s_global_assets.music[i].asset);
+    for (int i = 0; i < s_global_assets.text_count;    i++)
+        if (s_global_assets.texts[i].asset != NULL)
+            UnloadFileText(s_global_assets.texts[i].asset);
 
     memset(&s_global_assets, 0, sizeof(s_global_assets));
 }
@@ -120,6 +126,16 @@ Music     lily_get_music(const char* name)
     TraceLog(LOG_WARNING, "Music not found: %s", name);
     
     return (Music) {0};
+}
+
+char*     lily_get_text(const char* name)
+{
+    for (int i = 0; i < s_global_assets.text_count; i++)
+        if (strcmp(s_global_assets.texts[i].name, name) == 0)
+            return s_global_assets.texts[i].asset;
+    TraceLog(LOG_WARNING, "Text not found: %s", name);
+
+    return NULL;
 }
 
 static void parse_font_value(const char* value, char* path_out, usize path_cap, int* size_out) {
@@ -204,6 +220,12 @@ static int parse_arts_ini(
         lily_music_slot_t* slot = &s_global_assets.music[s_global_assets.music_count++];
         snprintf(slot->name, LILY_MAX_NAME, "%s", name);
         slot->asset = lily_load_zip_music(pstart);
+    }
+    if (MATCH("Text")) {
+        if (s_global_assets.text_count >= LILY_MAX_TEXTS) return 1;
+        lily_text_slot_t* slot = &s_global_assets.texts[s_global_assets.text_count++];
+        snprintf(slot->name, LILY_MAX_NAME, "%s", name);
+        slot->asset = lily_load_zip_text(pstart);
     }
     return 1;
 }

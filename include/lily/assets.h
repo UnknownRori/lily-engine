@@ -17,3 +17,4 @@ Texture2D lily_get_texture2d(const char* name);
 Font      lily_get_font(const char* name);
 Sound     lily_get_sound(const char* name);
 Music     lily_get_music(const char* name);
+char*     lily_get_text(const char* name);
