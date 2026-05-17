@@ -34,7 +34,7 @@ static int handler(
         *config->height = (u32)atoi(value);
     } else if (MATCH("Display", "VSYNC")) {
         *config->vsync = (u32)atoi(value) > 0 ? true : false;
-    } else if (MATCH("Display", "Height")) {
+    } else if (MATCH("Display", "FPS")) {
         u32 fps = (u32)atoi(value);
         if (fps > 255) {
             fps = 60;
