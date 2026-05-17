@@ -113,6 +113,7 @@ void render2d_pipeline_flush(render2d_pipeline_t* p)
 #define REGISTER_CMD_PUSH_IMPL(NAME, CMD_TYPE, TYPE, VAR) \
     void render2d_push_##NAME##_impl(render2d_pipeline_t* p, u16 z, TYPE t)             \
     {                                                                                   \
+        RORI_ASSERT(p != NULL);                                                         \
         render2d_cmd_t cmd = (render2d_cmd_t) {                                         \
             .type = CMD_TYPE,                                                           \
             .z    = z,                                                                  \
