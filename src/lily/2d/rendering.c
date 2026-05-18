@@ -12,6 +12,7 @@ typedef struct render2d_pipeline_t {
     u32 capacity;
     render2d_cmd_t* items;
 
+    Camera2D*        camera;
     Shader*          shader;
     RenderTexture2D* target;
 } render2d_pipeline_t;
@@ -36,6 +37,7 @@ render2d_pipeline_t* render2d_pipeline_init_impl(render2d_pipeline_args args)
     rstb_da_reserve(pipeline, args.reserve);
     pipeline->target = args.target;
     pipeline->shader = args.shader;
+    pipeline->camera = args.camera;
     return pipeline;
 }
 
@@ -51,6 +53,9 @@ void render2d_pipeline_flush(render2d_pipeline_t* p)
     qsort(p->items, p->count, sizeof(*p->items), sort_z_level);
     if (p->target) {
         BeginTextureMode(*p->target);
+    }
+    if (p->camera) {
+        BeginMode2D(*p->camera);
     }
     rstb_da_foreach(render2d_cmd_t, cmd, p) {
         switch(cmd->type) {
@@ -97,14 +102,18 @@ void render2d_pipeline_flush(render2d_pipeline_t* p)
         }
     }
     rstb_da_reset(p);
+    if (p->camera) {
+        EndMode2D();
+    }
     if (p->target) {
-        BeginTextureMode(*p->target);
+        EndTextureMode();
     }
 }
 
 #define REGISTER_CMD_PUSH_IMPL(NAME, CMD_TYPE, TYPE, VAR) \
     void render2d_push_##NAME##_impl(render2d_pipeline_t* p, u16 z, TYPE t)             \
     {                                                                                   \
+        RORI_ASSERT(p != NULL);                                                         \
         render2d_cmd_t cmd = (render2d_cmd_t) {                                         \
             .type = CMD_TYPE,                                                           \
             .z    = z,                                                                  \
