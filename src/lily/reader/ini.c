@@ -1,4 +1,5 @@
 #include <string.h>
+#include <raylib.h>
 #include <ini.h>
 #include "lily/reader/ini.h"
 #include "lily/assert.h"
@@ -33,6 +34,8 @@ static int _handler(
     strncpy(e->section  , section   , CONFIG_KEY_LEN);
     strncpy(e->key      , key       , CONFIG_KEY_LEN);
     strncpy(e->value    , value     , CONFIG_VAL_LEN);
+    ini->count++;
+    return 1;
 }
 
 lily_ini_t* lily_ini_parse      (const char* buffer, bool* status)

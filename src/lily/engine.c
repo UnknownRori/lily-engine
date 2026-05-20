@@ -1,10 +1,11 @@
 #include <raylib.h>
 #include "lily/engine.h"
 #include "lily/memory.h"
+#include "lily/config.h"
 #include "lily/types.h"
 
 #include "./assets.h"
-#include "./ini/engine_config.h"
+#include "./config.h"
 #include "./scene_manager.h"
 
 #if defined(PLATFORM_WEB)
@@ -16,19 +17,14 @@ static void lily_update();
 
 rori_status_t lily_engine_init_impl(lily_engine_param params)
 {
-    char* title = params.title;
-    u32  width  = params.width;
-    u32  height = params.height;
-    u8   fps    = params.fps;
-    bool vsync  = params.vsync;
-    bool read_config = false;
-    if (title == NULL) {
-        title = "Lily Engine by UnknownRori";
+    if (!engine_ini_parse()) {
+        TraceLog(LOG_WARNING, "Configuration load failed");
     }
-
-    if (params.read_engine_ini) {
-        read_config = !engine_ini_parse(&title, &width, &height, &fps, &vsync);
-    }
+    const char* title = lily_config_get_cstr("Display", "Title", "Lily Engine by UnknownRori");
+    u32  width  = lily_config_get_i32("Display", "Width", 800);
+    u32  height = lily_config_get_i32("Display", "Height", 600);
+    u8   fps    = lily_config_get_i32("Display", "FPS", 60);
+    bool vsync  = lily_config_get_bool("Display", "VSYNC", true);
 
     InitAudioDevice();
     InitWindow(width, height, title);
@@ -42,10 +38,6 @@ rori_status_t lily_engine_init_impl(lily_engine_param params)
 
     scene_manager_init();
     scene_manager_change(params.start);
-
-    if (read_config) {
-        RORI_FREE(title);
-    }
 
     return RORI_SUCCESS;
 }

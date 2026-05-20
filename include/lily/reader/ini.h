@@ -12,7 +12,6 @@
 #pragma once
 
 #include "../types.h"
-#include <rstb_sv.h>
 
 typedef struct lily_ini_t lily_ini_t;
 
